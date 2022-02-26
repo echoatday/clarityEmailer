@@ -11,12 +11,11 @@ namespace ClarityEmail
         }
 
         // Spit form text into the actual SendEmail method.
-        private void ButtonSend_Click(object sender, RoutedEventArgs e)
+        private async void ButtonSend_Click(object sender, RoutedEventArgs e)
         {
             if(txtRecipient.Text != "" && txtSubject.Text != "" && txtBody.Text != "")
             {
-                Email.SendEmail(txtRecipient.Text, txtSubject.Text, txtBody.Text);
-                error.Text = "Mail sent";
+                error.Text = await Email.SendEmail(txtRecipient.Text, txtSubject.Text, txtBody.Text);
             }
             else
             {

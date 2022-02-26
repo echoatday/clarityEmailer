@@ -4,6 +4,7 @@ using System.Net;
 using Newtonsoft.Json.Linq;
 using System.IO;
 using System.Data.SqlClient;
+using System.Threading.Tasks;
 
 /*
 Your challenge is to address this problem with the following constraints:
@@ -22,12 +23,7 @@ namespace ClarityDLL
 {
     public class Email
     {
-        static void Main(string[] args)
-        {
-            // Important
-        }
-
-        public static async void SendEmail(string recipient, string subject, string body)
+        public static async Task<string> SendEmail(string recipient, string subject, string body)
         {
             JObject settings = JObject.Parse(File.ReadAllText(@"C:\Users\Echo\source\repos\ClarityInterview\clarityDLL\appsettings.json"));
 
@@ -52,15 +48,21 @@ namespace ClarityDLL
                 try
                 {
                     await smtpClient.SendMailAsync(message);
-                    i = 3;
-                    status = "Sent";
+                    status = "Send attempt " + (i+1) + " succeeded";
+                    i = 2;
                 }
-                catch // not currently displaying errors
+                catch
                 {
-                    status = "Unsent";
+                    status = "Send attempt " + (i+1) + " failed";
                 }
+                Databaser(message, status, settings);
             }
 
+            return status;
+        }
+
+        private static void Databaser(MailMessage message, string status, JObject settings)
+        {
             string connectionString = (string)settings["Sql"]["ConnectionString"];
             string insertQuery = $"INSERT INTO EmailHistory (Sender, Recipient, Subject, Body, Date, Status)";
             insertQuery += " VALUES (@Sender, @Recipient, @Subject, @Body, @Date, @Status)";
@@ -76,8 +78,6 @@ namespace ClarityDLL
                 saveEmail.Parameters.AddWithValue("@Status", status);
                 saveEmail.ExecuteNonQuery();
             }
-
-
         }
 
     }
