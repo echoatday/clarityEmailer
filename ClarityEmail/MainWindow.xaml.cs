@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using ClarityDLL;
 
 namespace ClarityEmail
@@ -15,7 +16,14 @@ namespace ClarityEmail
         {
             if(txtRecipient.Text != "" && txtSubject.Text != "" && txtBody.Text != "")
             {
-                error.Text = await Email.SendEmail(txtRecipient.Text, txtSubject.Text, txtBody.Text);
+                try
+                {
+                    error.Text = await Email.SendEmail(txtRecipient.Text, txtSubject.Text, txtBody.Text);
+                }
+                catch (System.FormatException)
+                {
+                    error.Text = "Invalid email format";
+                }
             }
             else
             {

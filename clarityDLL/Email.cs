@@ -2,9 +2,9 @@
 using System.Net.Mail;
 using System.Net;
 using Newtonsoft.Json.Linq;
-using System.IO;
 using System.Data.SqlClient;
 using System.Threading.Tasks;
+using clarityDLL.Properties;
 
 /*
 Your challenge is to address this problem with the following constraints:
@@ -25,7 +25,7 @@ namespace ClarityDLL
     {
         public static async Task<string> SendEmail(string recipient, string subject, string body)
         {
-            JObject settings = JObject.Parse(File.ReadAllText(@"C:\Users\Echo\source\repos\ClarityInterview\clarityDLL\appsettings.json"));
+            JObject settings = JObject.Parse(Resources.appsettings);
 
             var smtpClient = new SmtpClient((string)settings["Smtp"]["Host"])
             {

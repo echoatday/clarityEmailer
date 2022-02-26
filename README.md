@@ -28,6 +28,5 @@ CREATE TABLE [dbo].[EmailHistory] (
 
 ### Important Setup Information
 * After creating a SQL database with the above EmailHistory table, enter its connection string into "ConnectionString" in appsettings.json
-* Smtp credentials in appsettings.json can be changed if desired. It is currently using a throwaway gmail account for testing and demonstration.
-* Currently, line 28 of Email.cs requires the full file path of appsettings.json on your computer. Adjust accordingly for your file structure
+* Smtp credentials in appsettings.json can be changed if desired. It is currently using a throwaway gmail account for testing and demonstration
 * Relevant NuGet packages are **Newtonsoft.Json** and **System.Data.SqlClient**
